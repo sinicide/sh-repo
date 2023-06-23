@@ -7,3 +7,4 @@ data:
   GF_SECURITY_DISABLE_GRAVATAR: "true"
   GF_INSTALL_PLUGINS: "grafana-worldmap-panel,grafana-clock-panel,grafana-github-datasource,fifemon-graphql-datasource,grafana-kubernetes-app,ntop-ntopng-datasource,redis-datasource,frser-sqlite-datasource,grafana-piechart-panel"
   GF_AUTH_BASIC_ENABLED: "false"
+  GF_AUTH_DISABLE_LOGIN_FORM: "true"
