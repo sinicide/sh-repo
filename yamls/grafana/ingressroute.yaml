@@ -1,0 +1,32 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: grafana-http
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`grafana.sin.lan`)
+    kind: Rule
+    services:
+      - name: grafana
+        port: 3000
+    middlewares:
+      - name: redirect-https
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: grafana-https
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`grafana.sin.lan`)
+    kind: Rule
+    services:
+      - name: grafana
+        port: 3000
+  tls:
+    store:
+      name: default
