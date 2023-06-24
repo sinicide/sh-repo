@@ -21,9 +21,6 @@ spec:
       containers:
         - name: grafana
           image: grafana/grafana:10.0.1
-          envFrom:
-          - configMapRef:
-              name: grafana-cm
           ports:
             - name: http
               containerPort: 3000
