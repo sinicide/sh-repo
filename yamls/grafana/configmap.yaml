@@ -5,4 +5,7 @@ metadata:
 data:
   GF_SERVER_ENABLE_GZIP: "true"
   GF_SECURITY_DISABLE_GRAVATAR: "true"
-  GF_INSTALL_PLUGINS: "grafana-worldmap-panel,grafana-clock-panel,grafana-github-datasource,fifemon-graphql-datasource,grafana-kubernetes-app,ntop-ntopng-datasource,redis-datasource,frser-sqlite-datasource,grafana-piechart-panel"
+  #GF_INSTALL_PLUGINS: "grafana-worldmap-panel,grafana-clock-panel,grafana-github-datasource,fifemon-graphql-datasource,grafana-kubernetes-app,ntop-ntopng-datasource,redis-datasource,frser-sqlite-datasource,grafana-piechart-panel"
+  GF_ANALYTICS_CHECK_FOR_UPDATES: "false"
+  GF_ANALYTICS_REPORTING_ENABLED: "false"
+  GF_DATABASE_WAL: "true"
