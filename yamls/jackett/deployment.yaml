@@ -23,7 +23,7 @@ spec:
           readinessProbe:
             failureThreshold: 3
             httpGet:
-              path: /UI/Dashboard
+              path: /
               port: 9117
               scheme: HTTP
             initialDelaySeconds: 10
