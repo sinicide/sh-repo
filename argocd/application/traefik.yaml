@@ -1,0 +1,75 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: traefik
+  namespace: argocd
+  labels:
+    name: traefik
+  # remove this for prod
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://traefik.github.io/charts
+    targetRevision: v23.1.0
+    chart: traefik
+
+    helm:
+      values: |
+        deployment:
+          enabled: true
+
+        ingressRoute:
+          dashboard:
+            enabled: true
+            matchRule: PathPrefix(`/dashboard`) || PathPrefix(`/api`) && Host(`traefik-temp.sin.lan`)
+            entryPoints: ["web","websecure"]
+          
+        providers:
+          kubernetesCRD:
+            enabled: true
+
+        logs:
+          general:
+            format: json
+            level: ERROR
+          access:
+            format: json
+            enabled: true
+            filters:
+              statuscodes: "300-302,400-499"
+
+        metrics:
+          prometheus:
+            entryPoints: metrics
+
+        additionalArguments:
+        - "--serverstransport.insecureskipverify=true"
+
+        globalArguments:
+          - "--global.checknewversion=false"
+          - "--global.sendanonymoususage=false"
+
+        ports:
+          traefik:
+            healthchecksPort: 9000
+            healthcheckScheme: HTTP
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: networking
+
+  syncPolicy:
+    automated:
+      prune: false
+    syncOptions:
+    - CreateNamespace=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+
+  revisionHistoryLimit: 3
