@@ -1,0 +1,52 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: jackett
+  labels:
+    app: jackett
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jackett
+  template:
+    metadata:
+      labels:
+        app: jackett
+    spec:
+      containers:
+        - name: jackett
+          image: linuxserver/jackett:0.21.327
+          ports:
+            - name: http
+              containerPort: 9117
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /UI/Dashboard
+              port: 9117
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 2
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 9117
+            timeoutSeconds: 1
+          volumeMounts:
+          - name: jackett-pv
+            mountPath: "/config"
+          - name: jackett-download
+            mountPath: "/downloads"
+      volumes:
+        - name: jackett-pv
+          persistentVolumeClaim:
+            claimName: jackett-claim
+        - name: jackett-download
+          emptyDir:
+            sizeLimit: 500Mi

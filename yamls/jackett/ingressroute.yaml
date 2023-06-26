@@ -1,0 +1,27 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: jackett-http
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`jackett-temp.sin.lan`)
+    kind: Rule
+    services:
+      - name: jackett
+        port: 9117
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: jackett-https
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`jackett-temp.sin.lan`)
+    kind: Rule
+    services:
+      - name: jackett
+        port: 9117
