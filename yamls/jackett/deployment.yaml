@@ -22,10 +22,9 @@ spec:
               containerPort: 9117
           readinessProbe:
             failureThreshold: 3
-            httpGet:
+            tcpSocket:
               path: /
               port: 9117
-              scheme: HTTP
             initialDelaySeconds: 10
             periodSeconds: 30
             successThreshold: 1
