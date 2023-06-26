@@ -44,16 +44,18 @@ spec:
               port: 9090
             timeoutSeconds: 1
           volumeMounts:
-          - name: prometheus-pv
-            mountPath: "/etc/prometheus"
+          - name: prometheus-data-pv
+            mountPath: "/etc/prometheus/data"
           - name: prometheus-config
             mountPath: "/etc/prometheus/prometheus.yml"
+            subPath: "prometheus.yml"
+            readOnly: true
           - name: tls-certs
             mountPath: "/etc/ssl/certs"
       volumes:
-        - name: prometheus-pv
-          persistentVolumeClaim:
-            claimName: prometheus-claim
+        - name: prometheus-data-pv
+          emptyDir:
+            sizeLimit: 6Gi
         - name: prometheus-config
           secret:
             secretName: prometheus-config
