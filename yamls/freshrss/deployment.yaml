@@ -1,0 +1,47 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: freshrss
+  labels:
+    app: freshrss
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: freshrss
+  template:
+    metadata:
+      labels:
+        app: freshrss
+    spec:
+      containers:
+        - name: freshrss
+          image: linuxserver/freshrss:1.21.0
+          ports:
+            - name: http
+              containerPort: 80
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /i
+              port: 80
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 2
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 80
+            timeoutSeconds: 1
+          volumeMounts:
+          - name: freshrss-pv
+            mountPath: "/config"
+      volumes:
+        - name: freshrss-pv
+          persistentVolumeClaim:
+            claimName: freshrss-claim

@@ -1,0 +1,27 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: freshrss-http
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`rss-temp.sin.lan`)
+    kind: Rule
+    services:
+      - name: freshrss
+        port: 80
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: freshrss-https
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`rss-temp.sin.lan`)
+    kind: Rule
+    services:
+      - name: freshrss
+        port: 80
