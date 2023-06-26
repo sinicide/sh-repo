@@ -1,0 +1,50 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: prometheus
+  labels:
+    app: prometheus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prometheus
+  template:
+    metadata:
+      labels:
+        app: prometheus
+    spec:
+      containers:
+        - name: prometheus
+          image: prom/prometheus:v2.45.0
+          args:
+            - "--config.file=/etc/prometheus/prometheus.yml"
+            - "--storage.tsdb.path=/etc/prometheus/data"
+            - "--storage.tsdb.retention.time=15d"
+            - "--storage.tsdb.retention.size=5GB"
+          ports:
+            - name: http
+              containerPort: 9090
+          volumeMounts:
+          - name: prometheus-pv
+            mountPath: "/etc/prometheus"
+          - name: prometheus-config
+            mountPath: "/etc/prometheus"
+          - name: tls-certs
+            mountPath: "/etc/ssl/certs"
+      volumes:
+        - name: prometheus-pv
+          persistentVolumeClaim:
+            claimName: prometheus-claim
+        - name: prometheus-config
+          secret:
+            secretName: prometheus-config
+            items:
+            - key: "prometheus.yml"
+              path: "prometheus.yml"
+        - name: tls-certs
+          secret:
+            secretName: tls-certs
+            items:
+            - key: "ca.pem"
+              path: "ca.pem"
