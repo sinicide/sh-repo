@@ -23,7 +23,7 @@ spec:
         ingressRoute:
           dashboard:
             enabled: true
-            matchRule: PathPrefix(`/dashboard`) || PathPrefix(`/api`) && Host(`traefik-temp.sin.lan`)
+            matchRule: Host(`traefik-temp.sin.lan`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`))
             entryPoints: ["web","websecure"]
           
         providers:
