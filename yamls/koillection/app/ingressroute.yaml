@@ -1,0 +1,27 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: koillection-http
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`koillection-temp.sin.lan`)
+    kind: Rule
+    services:
+      - name: koillection
+        port: 80
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: koillection-https
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`koillection-temp.sin.lan`)
+    kind: Rule
+    services:
+      - name: koillection
+        port: 80

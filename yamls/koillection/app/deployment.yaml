@@ -1,0 +1,54 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: koillection
+  labels:
+    app: koillection
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: koillection
+  template:
+    metadata:
+      labels:
+        app: koillection
+    spec:
+      containers:
+        - name: koillection
+          image: koillection/koillection:1.4.6
+          ports:
+            - name: http
+              containerPort: 80
+          envFrom:
+          - secretRef:
+              name: koillection-secrets
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /robots.txt
+              port: 80
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 2
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 80
+            timeoutSeconds: 1
+          volumeMounts:
+          - name: koillection-pv
+            mountPath: "/conf"
+            subPath: "conf"
+          - name: koillection-pv
+            mountPath: "/uploads"
+            subPath: "uploads"
+      volumes:
+        - name: koillection-pv
+          persistentVolumeClaim:
+            claimName: koillection-claim
