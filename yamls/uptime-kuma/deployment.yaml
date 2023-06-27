@@ -22,9 +22,10 @@ spec:
               containerPort: 3001
           readinessProbe:
             failureThreshold: 3
-            tcpSocket:
+            httpGet:
               path: /robots.txt
               port: 3001
+              scheme: HTTP
             initialDelaySeconds: 10
             periodSeconds: 30
             successThreshold: 1
