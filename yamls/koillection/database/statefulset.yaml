@@ -1,0 +1,39 @@
+kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+  name: koillection-postgres-db
+  namespace: databases
+  labels:
+    app: koillection-postgres-db
+spec:
+  serviceName: "koillection-postgres-db"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: koillection-postgres-db
+  template:
+    metadata:
+      labels:
+        app: koillection-postgres-db
+    spec:
+      containers:
+        - name: koillection-postgres-db
+          image: postgres:10-alpine
+          envFrom:
+          - secretRef:
+              name: koillection-db-secrets
+          volumeMounts:
+          - name: claim
+            mountPath: "/var/lib/postgresql/data"
+          ports:
+            - name: db
+              containerPort: 5432
+  volumeClaimTemplates:
+    - metadata:
+        name: claim
+      spec:
+        accessModes: [ "ReadWriteMany" ]
+        storageClassName: "longhorn-retain"
+        resources:
+          requests:
+            storage: 10Gi
