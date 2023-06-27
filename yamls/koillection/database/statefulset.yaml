@@ -24,7 +24,8 @@ spec:
               name: koillection-db-secrets
           volumeMounts:
           - name: claim
-            mountPath: "/var/lib/postgresql/data"
+            mountPath: "/var/lib/postgresql"
+            subPath: "data"
           ports:
             - name: db
               containerPort: 5432
@@ -36,4 +37,4 @@ spec:
         storageClassName: "longhorn-retain"
         resources:
           requests:
-            storage: 10Gi
+            storage: 2Gi
