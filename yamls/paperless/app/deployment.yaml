@@ -1,0 +1,65 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: paperless-ngx
+  labels:
+    app: paperless-ngx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: paperless-ngx
+  template:
+    metadata:
+      labels:
+        app: paperless-ngx
+    spec:
+      containers:
+        - name: paperless-ngx
+          image: ghcr.io/paperless-ngx/paperless-ngx:1.16.5
+          envFrom:
+          - configMapRef:
+              name: paperless-config
+          ports:
+            - name: http
+              containerPort: 8000
+          volumeMounts:
+          - name: paperless-pv
+            mountPath: "/paperless"
+      volumes:
+        - name: paperless-pv
+          persistentVolumeClaim:
+            claimName: paperless-claim
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: paperless-tika
+  labels:
+    app: paperless-tika
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: paperless-tika
+  template:
+    metadata:
+      labels:
+        app: paperless-tika
+    spec:
+      containers:
+        - name: paperless-tika
+          image: apache/tika:2.8.0.0
+          envFrom:
+          - configMapRef:
+              name: paperless-config
+          ports:
+            - name: http
+              containerPort: 8000
+          volumeMounts:
+          - name: paperless-pv
+            mountPath: "/paperless"
+      volumes:
+        - name: paperless-pv
+          persistentVolumeClaim:
+            claimName: paperless-claim

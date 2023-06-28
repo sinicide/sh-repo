@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: paperless-config
+data:
+  PAPERLESS_REDIS: "redis://paperless-redis-db.databases:6379"
+  # Tika
+  PAPERLESS_TIKA_ENABLED: "true"
+  PAPERLESS_TIKA_ENDPOINT: "http://tika:port"
+  # 
+  PAPERLESS_CONSUMPTION_DIR: "/tmp/consume"
+  PAPERLESS_DATA_DIR: "/paperless/data"
+  PAPERLESS_TRASH_DIR: "/paperless/trash"
+  PAPERLESS_MEDIA_ROOT: "/paperless/media"
+  PAPERLESS_STATICDIR: "/paperless/static"
+  PAPERLESS_LOGGING_DIR: "/tmp/log"

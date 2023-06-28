@@ -1,0 +1,27 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: paperless-http
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`paperless-temp.sin.lan`)
+    kind: Rule
+    services:
+      - name: paperless
+        port: 8000
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: paperless-https
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`paperless-temp.sin.lan`)
+    kind: Rule
+    services:
+      - name: paperless
+        port: 8000
