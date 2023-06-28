@@ -9,6 +9,7 @@ data:
   PAPERLESS_TIKA_ENDPOINT: "http://tika:port"
   # 
   PAPERLESS_CONSUMPTION_DIR: "/tmp/consume"
+  PAPERLESS_BASE_DIR: "/paperless"
   PAPERLESS_DATA_DIR: "/paperless/data"
   PAPERLESS_TRASH_DIR: "/paperless/trash"
   PAPERLESS_MEDIA_ROOT: "/paperless/media"
