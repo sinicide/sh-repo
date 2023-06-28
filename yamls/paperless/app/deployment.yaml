@@ -20,7 +20,7 @@ spec:
           envFrom:
           - configMapRef:
               name: paperless-config
-          command: ["sh", "-c", "mkdir -p $PAPERLESS_DATA_DIR; mkdir $PAPERLESS_TRASH_DIR; mkdir $PAPERLESS_MEDIA_ROOT; mkdir $PAPERLESS_STATICDIR"]
+          command: ["sh", "-c", "mkdir -p $PAPERLESS_DATA_DIR; mkdir $PAPERLESS_TRASH_DIR; mkdir $PAPERLESS_MEDIA_ROOT; mkdir $PAPERLESS_STATICDIR; chown -R 1000:1000 $PAPERLESS_BASE_DIR "]
           volumeMounts:
           - name: paperless-pv
             mountPath: "/paperless"
