@@ -1,0 +1,30 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: paperless-redis-db
+  namespace: databases
+  labels:
+    app: paperless-redis-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: paperless-redis-db
+  template:
+    metadata:
+      labels:
+        app: paperless-redis-db
+    spec:
+      containers:
+        - name: paperless-redis-db
+          image: redis:7.0.11
+          ports:
+            - name: db
+              containerPort: 6379
+          volumeMounts:
+          - name: paperless-redis-db-pv
+            mountPath: "/data"
+      volumes:
+        - name: paperless-redis-db-pv
+          persistentVolumeClaim:
+            claimName: paperless-redis-db-claim
