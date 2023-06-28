@@ -4,9 +4,10 @@ metadata:
   name: paperless-config
 data:
   PAPERLESS_REDIS: "redis://paperless-redis-db.databases:6379"
+  PAPERLESS_URL: "https://paperless-temp.sin.lan"
   # Tika
   PAPERLESS_TIKA_ENABLED: "true"
-  PAPERLESS_TIKA_ENDPOINT: "http://tika:port"
+  PAPERLESS_TIKA_ENDPOINT: "http://paperless-tika:9998"
   # 
   PAPERLESS_CONSUMPTION_DIR: "/tmp/consume"
   PAPERLESS_BASE_DIR: "/paperless"
