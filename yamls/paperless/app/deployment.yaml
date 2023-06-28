@@ -21,6 +21,9 @@ spec:
           - configMapRef:
               name: paperless-config
           command: ["sh", "-c", "mkdir -p $PAPERLESS_DATA_DIR; mkdir $PAPERLESS_TRASH_DIR; mkdir $PAPERLESS_MEDIA_ROOT; mkdir $PAPERLESS_STATICDIR"]
+          volumeMounts:
+          - name: paperless-pv
+            mountPath: "/paperless"
       containers:
         - name: paperless-ngx
           image: ghcr.io/paperless-ngx/paperless-ngx:1.16.5
