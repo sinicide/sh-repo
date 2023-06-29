@@ -33,7 +33,7 @@ spec:
     - metadata:
         name: claim
       spec:
-        accessModes: [ "ReadWriteMany" ]
+        accessModes: [ "ReadWriteOnce" ]
         storageClassName: "longhorn-retain"
         resources:
           requests:

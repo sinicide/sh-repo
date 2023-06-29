@@ -5,7 +5,7 @@ metadata:
   namespace: databases
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   storageClassName: longhorn-retain
   resources:
     requests:
