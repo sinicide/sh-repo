@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: koillection
+  namespace: argocd
+  labels:
+    name: koillection
+  # remove this for prod
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - repoURL: https://github.com/sinicide/sh-repo
+      targetRevision: HEAD
+      path: yamls/koillection/app
+    - repoURL: https://github.com/sinicide/sh-repo
+      targetRevision: HEAD
+      path: yamls/koillection/database
+    
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: apps
+
+  syncPolicy:
+    automated:
+      prune: false
+    syncOptions:
+    - CreateNamespace=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+
+  revisionHistoryLimit: 3
