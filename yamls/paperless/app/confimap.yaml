@@ -1,14 +1,15 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: paperless-config
+  name: paperless-ngx-config
 data:
   PAPERLESS_REDIS: "redis://paperless-redis-db.databases:6379"
   PAPERLESS_URL: "https://paperless-temp.sin.lan"
+  PAPERLESS_USE_X_FORWARD_HOST: "true"
+  PAPERLESS_USE_X_FORWARD_PORT: "true"
   # Tika
   PAPERLESS_TIKA_ENABLED: "true"
   PAPERLESS_TIKA_ENDPOINT: "http://paperless-tika:9998"
-  # 
   PAPERLESS_CONSUMPTION_DIR: "/tmp/consume"
   PAPERLESS_BASE_DIR: "/paperless"
   PAPERLESS_DATA_DIR: "/paperless/data"
@@ -16,3 +17,5 @@ data:
   PAPERLESS_MEDIA_ROOT: "/paperless/media"
   PAPERLESS_STATICDIR: "/paperless/static"
   PAPERLESS_LOGGING_DIR: "/tmp/log"
+  # for somereason the debug parameter makes it work, otherwise I get nothing when logging in
+  PAPERLESS_DEBUG: "true"
