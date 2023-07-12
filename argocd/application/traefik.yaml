@@ -55,6 +55,21 @@ spec:
           traefik:
             healthchecksPort: 9000
             healthcheckScheme: HTTP
+          graphite:
+            port: 2003
+            protocol: TCP
+            expose: true
+            exposedPort: 2003
+          influxdb:
+            port: 8086
+            protocol: TCP
+            expose: true
+            exposedPort: 8086
+          metrics:
+            port: 9100
+            expose: true
+            exposedPort: 9100
+            protocol: TCP
 
   destination:
     server: https://kubernetes.default.svc
