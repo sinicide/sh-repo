@@ -26,7 +26,7 @@ spec:
             mountPath: "/paperless"
       containers:
         - name: paperless-ngx
-          image: ghcr.io/paperless-ngx/paperless-ngx:1.16.5
+          image: ghcr.io/paperless-ngx/paperless-ngx:1.17.4
           envFrom:
           - configMapRef:
               name: paperless-ngx-config
