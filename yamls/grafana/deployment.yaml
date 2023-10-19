@@ -26,6 +26,8 @@ spec:
               containerPort: 3000
               protocol: TCP
           envFrom:
+            - secretRef:
+              name: grafana-secrets
             - configMapRef:
                 name: grafana-cm
           readinessProbe:
