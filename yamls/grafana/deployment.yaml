@@ -27,7 +27,7 @@ spec:
               protocol: TCP
           envFrom:
             - secretRef:
-              name: grafana-secrets
+                name: grafana-secrets
             - configMapRef:
                 name: grafana-cm
           readinessProbe:
