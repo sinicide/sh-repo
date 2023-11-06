@@ -19,13 +19,15 @@ spec:
       containers:
         - name: koillection-postgres-db
           image: postgres:10-alpine
+          env:
+          - name: PGDATA
+            value: "/data/pgdata"
           envFrom:
           - secretRef:
               name: koillection-db-secrets
           volumeMounts:
           - name: claim
-            mountPath: "/var/lib/postgresql"
-            subPath: "data"
+            mountPath: "/data"
           ports:
             - name: db
               containerPort: 5432
