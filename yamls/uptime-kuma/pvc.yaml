@@ -4,8 +4,8 @@ metadata:
   name: uptime-kuma-claim
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   storageClassName: longhorn-retain
   resources:
     requests:
-      storage: 512Mi
+      storage: 1Gi
