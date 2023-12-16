@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: uptime-kuma-config
 data:
-  NODE_TLS_REJECT_UNAUTHORIZED: 0
+  NODE_TLS_REJECT_UNAUTHORIZED: "0"
