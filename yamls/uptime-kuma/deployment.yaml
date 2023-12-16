@@ -38,6 +38,9 @@ spec:
             tcpSocket:
               port: 3001
             timeoutSeconds: 1
+          envFrom:
+            - configMapRef:
+                name: uptime-kuma-config
           volumeMounts:
           - name: uptime-kuma-pv
             mountPath: "/app/data"
