@@ -1,0 +1,13 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: anki-syncserver-http
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`anki-temp.sin.lan`)
+    kind: Rule
+    services:
+      - name: anki-syncserver
+        port: 8080

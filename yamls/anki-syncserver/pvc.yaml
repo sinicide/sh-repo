@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: anki-syncserver-claim
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: longhorn-retain
+  resources:
+    requests:
+      storage: 512M

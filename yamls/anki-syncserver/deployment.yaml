@@ -1,0 +1,32 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: anki-syncserver
+  labels:
+    app: anki-syncserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: anki-syncserver
+  template:
+    metadata:
+      labels:
+        app: anki-syncserver
+    spec:
+      containers:
+        - name: anki-syncserver
+          image: ghcr.io/sinicide/anki-syncserver:1.0.2
+          envFrom:
+          - secretRef:
+              name: anki-syncserver-secrets
+          ports:
+            - name: http
+              containerPort: 8080
+          volumeMounts:
+          - name: anki-syncserver-pv
+            mountPath: "/data"
+      volumes:
+        - name: anki-syncserver-pv
+          persistentVolumeClaim:
+            claimName: anki-syncserver-claim
