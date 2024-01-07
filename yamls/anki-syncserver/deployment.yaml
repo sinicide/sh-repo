@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: anki-syncserver
-          image: ghcr.io/sinicide/anki-syncserver:1.0.2
+          image: ghcr.io/sinicide/anki-syncserver:v1.0.2
           envFrom:
           - secretRef:
               name: anki-syncserver-secrets
