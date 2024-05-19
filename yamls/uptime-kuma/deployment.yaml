@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: uptime-kuma
-          image: louislam/uptime-kuma:1.23.10
+          image: louislam/uptime-kuma:1.23.13
           ports:
             - name: http
               containerPort: 3001
@@ -42,8 +42,8 @@ spec:
             - configMapRef:
                 name: uptime-kuma-config
           volumeMounts:
-          - name: uptime-kuma-pv
-            mountPath: "/app/data"
+            - name: uptime-kuma-pv
+              mountPath: "/app/data"
       volumes:
         - name: uptime-kuma-pv
           persistentVolumeClaim:
