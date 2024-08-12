@@ -23,15 +23,19 @@ spec:
           envFrom:
             - secretRef:
                 name: diun-secrets
-            - configMapRef:
-                name: diun-cm
           volumeMounts:
+            - name: config
+              mountPath: /etc/diun
+              subPath: diun.yml
             - name: watch-file
               mountPath: /config/watch.yml
               subPath: watch.yml
             - name: diun-pv
               mountPath: "/data"
       volumes:
+        - name: config
+          configMap:
+            name: diun-cm
         - name: watch-file
           configMap:
             name: diun-watch-cm
