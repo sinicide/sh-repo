@@ -25,7 +25,7 @@ spec:
                 name: diun-secrets
           volumeMounts:
             - name: config
-              mountPath: /etc/diun
+              mountPath: /etc/diun/diun.yml
               subPath: diun.yml
             - name: watch-file
               mountPath: /config/watch.yml
@@ -36,6 +36,9 @@ spec:
         - name: config
           configMap:
             name: diun-cm
+            items:
+              - key: diun.yml
+                path: diun.yml
         - name: watch-file
           configMap:
             name: diun-watch-cm
