@@ -1,0 +1,43 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: diun
+  labels:
+    app: diun
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: diun
+  template:
+    metadata:
+      labels:
+        app: diun
+    spec:
+      serviceAccountName: diun
+      containers:
+        - name: diun
+          image: ghcr.io/crazy-max/diun:latest
+          imagePullPolicy: Always
+          args: ["serve"]
+          envFrom:
+            - secretRef:
+                name: diun-secrets
+            - configMapRef:
+                name: diun-cm
+          volumeMounts:
+            - name: watch-file
+              mountPath: /config/watch.yml
+              subPath: watch.yml
+            - name: diun-pv
+              mountPath: "/data"
+      volumes:
+        - name: watch-file
+          configMap:
+            name: diun-watch-cm
+            items:
+              - key: watch.yml
+                path: watch.yml
+        - name: diun-pv
+          persistentVolumeClaim:
+            claimName: diun-claim

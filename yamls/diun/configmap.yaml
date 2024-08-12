@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: diun-cm
+data:
+  diun.yml: |
+    db:
+      path: /data/diun.db
+
+    watch:
+      workers: 10
+      schedule: "0 */24 * * *"
+      jitter: 120s
+      runOnStartup: false
+
+    defaults:
+      notifyOn:
+        - new
+        - update
+
+    notif:
+      gotify:
+        templateTitle: "{{ .Entry.Image }} released"
+        templateBody: |
+          Docker tag {{ .Entry.Image }} which you subscribed to through {{ .Entry.Provider }} provider has been released.
+    providers:
+      file:
+        filename: /config/watch.yml
