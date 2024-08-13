@@ -9,9 +9,9 @@ data:
 
     watch:
       workers: 10
-      schedule: "0 */24 * * *"
+      schedule: "0 */6 * * *"
       jitter: 120s
-      runOnStartup: false
+      runOnStartup: true
 
     defaults:
       notifyOn:
