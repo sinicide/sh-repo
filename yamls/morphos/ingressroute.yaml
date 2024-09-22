@@ -1,0 +1,28 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: morphos-http
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`morphos-temp.sin.lan`)
+      kind: Rule
+      services:
+        - name: morphos
+          port: 8080
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: morphos-https
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`morphos-temp.sin.lan`)
+      kind: Rule
+      services:
+        - name: morphos
+          port: 8080
+

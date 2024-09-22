@@ -1,0 +1,29 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: morphos
+  labels:
+    app: morphos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: morphos
+  template:
+    metadata:
+      labels:
+        app: morphos
+    spec:
+      containers:
+        - name: morphos
+          image: ghcr.io/danvergara/morphos-server:latest
+          ports:
+            - name: http
+              containerPort: 8080
+          volumeMounts:
+            - name: morphos-tmp
+              mountPath: "/tmp"
+      volumes:
+        - name: morphos-tmp
+          emptyDir:
+            sizeLimit: 128Mi
