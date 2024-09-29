@@ -70,6 +70,11 @@ spec:
             expose: true
             exposedPort: 9100
             protocol: TCP
+          playwright:
+            port: 3000
+            expose: true
+            exposedPort: 3000
+            protocol: TCP
 
   destination:
     server: https://kubernetes.default.svc
@@ -79,7 +84,7 @@ spec:
     automated:
       prune: false
     syncOptions:
-    - CreateNamespace=true
+      - CreateNamespace=true
     retry:
       limit: 5
       backoff:
@@ -88,3 +93,4 @@ spec:
         maxDuration: 3m
 
   revisionHistoryLimit: 3
+
