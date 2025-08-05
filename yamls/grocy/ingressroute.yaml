@@ -1,0 +1,28 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: grocy-http
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`grocy-temp.sin.lan`)
+      kind: Rule
+      services:
+        - name: grocy
+          port: 80
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: grocy-https
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`grocy-temp.sin.lan`)
+      kind: Rule
+      services:
+        - name: grocy
+          port: 80
+
